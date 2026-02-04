@@ -1,36 +1,105 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node.js / Express server .gitignore
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# local env files
-.env*.local
-.env
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# vercel
-.vercel
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output/
 
-# typescript
+# Dependency directories
+node_modules/
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnp.*
+.pnp.js
+.pnp.cjs
+
+# Build output
+dist/
+build/
+out/
+.next/
+.next/cache
+.vercel/
+.netlify/
+.serverless/
+
+# Vite / bundler caches
+.vite/
+.cache/
+.cache-loader/
+.parcel-cache/
+
+# TypeScript cache
 *.tsbuildinfo
-next-env.d.ts
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+.history/
+
+# Editor temp files
+*.tmp
+*.temp
+
+# Optional: Docker
+docker-compose.override.yml
+.docker/
+
+# Optional: PM2
+.pm2/
+
+# Optional: Prisma or other ORMs
+prisma/migrations/
+
+# Optional: Next.js, Gatsby, or similar
+.cache/
+public/.cache
+
+# Optional: Firebase, Amplify, Netlify, Vercel
+.firebase/
+amplify/
+.vercel/
+netlify.toml
+
+# Optional: Testing / tooling
+jest.config.*.local
+coverage/
+playwright-report/
+
+# Optional: Misc
+*.log.*
+*.local
+*.bak
+*.orig
