@@ -1,65 +1,78 @@
-import { request, type Request, type Response } from 'express';
-import Project from '../models/Project';
+import { request, type Request, type Response } from "express";
+import Project from "../models/Project";
 
 export class ProjectController {
+  //execute the controler method calling from routes
 
-    //execute the controler method calling from routes
+  static createProject = async (req: Request, res: Response) => {
+    console.log(req.body);
+    const project = new Project(req.body);
 
-     static createProject = async(req: Request, res: Response) =>{
-        console.log(req.body)
-        const project = new Project(req.body);
-
-        try {
-            await project.save()
-            res.send('Proyecto Creado Correctamente')
-        } catch (error) {
-            console.log(error)
-        }
-
+    try {
+      await project.save();
+      res.send("Proyecto Creado Correctamente");
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-      static getAllProjects = async(req: Request, res: Response) =>{
-        try {
-            const projects = await Project.find({})
-            res.json(projects)
+  static getAllProjects = async (req: Request, res: Response) => {
+    try {
+      const projects = await Project.find({});
+      res.json(projects);
+    } catch (error) {}
+  };
 
-        } catch (error) {
-            
-        }
+  static getProjectById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const project = await Project.findById(id);
+      if (!project) {
+        const error = new Error("Proyecto no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+      res.json(project);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    static getProjectById = async(req: Request, res: Response) =>{
-        const { id } = req.params;
-        console.log(id)
-        try {
-            const project = await Project.findById(id)
-            if(!project){
-                const error = new Error('Proyecto no encontrado')
-                return res.status(404).json({error: error.message})
-            }
-            res.json(project)
+  static updateProject = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const project = await Project.findByIdAndUpdate(id, req.body);
 
-        } catch (error) {
-            console.log(error)
-        }
+      if (!project) {
+        const error = new Error("Proyecto no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+
+      await project.save();
+      res.send("Proyecto Actualizado");
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-     static updateProject = async(req: Request, res: Response) =>{
-        const { id } = req.params;
-        console.log(id)
-        try {
-          const project = await Project.findByIdAndUpdate(id, req.body)
+  static deleteProject = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const project = await Project.findById(id);
 
-          if(!project){
-                const error = new Error('Proyecto no encontrado')
-                return res.status(404).json({error: error.message})
-          }
-          
-          await project.save()
-          res.send('Proyecto Actualizado')
-        } catch (error) {
-            console.log(error)
-        }
+      if (!project) {
+        const error = new Error("Proyecto no encontrado");
+        return res.status(404).json({ error: error.message });
+      }
+
+      console.log(project);
+      await project.deleteOne();
+
+      res.send("Proyecto Eliminado");
+    } catch (error) {
+      console.log(error);
     }
-
+  };
 }
