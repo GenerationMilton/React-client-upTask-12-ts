@@ -4,9 +4,6 @@ import Project from '../models/Project';
 export class ProjectController {
 
     //execute the controler method calling from routes
-    static getAllProjects = async(req: Request, res: Response) =>{
-        res.send('Todos los proyectos');
-    }
 
      static createProject = async(req: Request, res: Response) =>{
         console.log(req.body)
@@ -19,5 +16,15 @@ export class ProjectController {
             console.log(error)
         }
 
+    }
+
+      static getAllProjects = async(req: Request, res: Response) =>{
+        try {
+            const projects = await Project.find({})
+            res.json(projects)
+
+        } catch (error) {
+            
+        }
     }
 }
