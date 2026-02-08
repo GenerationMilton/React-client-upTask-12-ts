@@ -11,8 +11,9 @@ export class TaskController {
             console.log(task)
             task.project = req.project._id
             req.project.tasks.push(task._id)
-            await task.save()
-            await req.project.save()
+
+            // Execute the two promises allSettled
+            await Promise.allSettled([task.save(), req.project.save()])
             res.send('Tarea creada correctamente')
             console.log(task);
         } catch (error) {
