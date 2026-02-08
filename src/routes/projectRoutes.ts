@@ -70,4 +70,15 @@ router.get('/:projectId/tasks/:taskId',
 )
 
 
+/** Routes for tasks Update BY ID */
+router.put('/:projectId/tasks/:taskId',
+    param('taskId').isMongoId().withMessage('ID no válido'),
+    body('name')
+        .notEmpty().withMessage('El Nombre de la tarea es Obligatorio'),
+    body('description')
+        .notEmpty().withMessage('La descripción de la tarea es Obligatoria'),
+    handleInputErrors,
+    TaskController.updateTask
+)
+
 export default router

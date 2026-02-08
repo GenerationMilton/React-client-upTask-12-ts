@@ -1,8 +1,10 @@
 
-import type { Request, Response } from "express"
+import type { NextFunction, Request, Response } from "express"
 import Task from "../models/Task"
+import { ValidationChain } from "express-validator"
 
 export class TaskController {
+   
 
     static createTask = async (req: Request, res: Response) => {
 
@@ -48,6 +50,24 @@ export class TaskController {
         } catch (error) {
             res.status(500).json({error: 'Hubo un error'})
         }
+    }
+
+     static updateTask = async(req: Request, res: Response) => {
+       try {
+            const { taskId } = req.params
+            const task = await Task.findByIdAndUpdate(taskId, req.body)
+            if(!task){
+                const error = new Error('Tarea no encontrada')
+                return res.status(404).json({error: error.message})
+            }
+            if(task.project.toString() !== req.project._id.toString()){
+                const error = new Error('Accion no válida')
+                return res.status(400).json({error: error.message})
+            }
+            res.send("Tarea Actualizada Correctamente")
+       } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+       }
     }
 
 }
