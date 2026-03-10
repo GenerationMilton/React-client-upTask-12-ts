@@ -40,7 +40,6 @@ router.post('/login',
 router.post('/request-code',
     body('email')
         .isEmail().withMessage('E-mail no válido'),
-
     handleInputErrors,
     AuthController.requestConfirmationCode
 )
@@ -52,5 +51,11 @@ router.post('/forgot-password',
     AuthController.forgotPassword
 )
 
+router.post('/validate-token',
+    body('token')
+        .notEmpty().withMessage('El token no puede ir vacio'),
+    handleInputErrors,
+    AuthController.validateToken
+)
 
 export default router
