@@ -4,7 +4,9 @@ import { body, param } from 'express-validator'
 import { handleInputErrors } from '../middleware/validation'
 import { TaskController } from '../controllers/TaskController'
 import { taskBelongsToProject, taskExists } from '../middleware/task'
-import { projectExists } from '../middleware/Project'
+import { projectExists } from '../middleware/project'
+import { authenticate } from '../middleware/auth'
+
 
 const router = Router()
 
@@ -13,6 +15,7 @@ router.get('/',ProjectController.getAllProjects
 
 )
 router.post('/', 
+    authenticate,
     body('projectName')
         .notEmpty().withMessage('El nombre del Proyecto es Obligatorio'),
     body('clientName')
